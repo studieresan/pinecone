@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_margin="@dimen/standard_margin"
+    android:orientation="vertical"
+    tools:context="se.studieresan.studs.events.master.detail.EventDetailFragment">
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/event_header_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Base.TextAppearance.AppCompat.Headline"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="@dimen/margin_half"
+        android:text="Digpro"
+        />
+
+    <TextView
+        android:id="@+id/event_date_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Base.TextAppearance.AppCompat.Body1"
+        android:textColor="@android:color/white"
+        android:text="2018-01-01"
+        />
+
+    <TextView
+        android:id="@+id/event_date_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Base.TextAppearance.AppCompat.Body1"
+        android:textColor="@android:color/white"
+        android:text="Description:Före-formulär: https://goo.gl/forms/Y5XC8vEFYlDbCxch2
+
+Efter-formulär: https://goo.gl/forms/4W4YcGszqS3BQflF3
+
+Agenda:
+17.45: Samling vid Ulriksborgsgatan 5
+18:00-19:10 Äta och presentationer
+19:15-20:15 Spel och lekar
+20:15-      Mingel och pingis"
+        />
+
+</LinearLayout>

@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "10760093570",
+    "firebase_url": "https://studs18-app.firebaseio.com",
+    "project_id": "studs18-app",
+    "storage_bucket": "studs18-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10760093570:android:4a57651bf07d3462",
+        "android_client_info": {
+          "package_name": "se.studieresan.studs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10760093570-ucid3venci8hjhc3u86toqh68n7p5kl8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "se.studieresan.studs",
+            "certificate_hash": "cddae18f0dbe626cff8b0397666c6002720443fe"
+          }
+        },
+        {
+          "client_id": "10760093570-23b961b50rgrttnhku79rajhai5rtsd6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIsFvkQAI4GfqUysMuTjGKqJy5ZYE-yUs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10760093570-6b08d4u1noko82dplgrmktvuc8sgabu0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "se.studieresan.Studs"
+              }
+            },
+            {
+              "client_id": "10760093570-23b961b50rgrttnhku79rajhai5rtsd6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
