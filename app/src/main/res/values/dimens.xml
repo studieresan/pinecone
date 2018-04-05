@@ -1,5 +1,7 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="standard_margin">16dp</dimen>
-    <dimen name="margin_half">8dp</dimen>
+    <dimen name="margin_standard">16dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_small_half">4dp</dimen>
+    <dimen name="map_height">270dp</dimen>
 </resources>

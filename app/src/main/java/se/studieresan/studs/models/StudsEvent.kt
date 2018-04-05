@@ -1,14 +1,14 @@
 package se.studieresan.studs.models
 
 data class StudsEvent(
-        val id: String = "",
+        val id: String,
         val companyName: String  = "",
-        val privateDescription: String  = "",
-        val publicDescription: String  = "",
-        val date: String = "",
+        val privateDescription: String? = null,
+        val publicDescription: String?  = null,
+        val date: String? = null,
         val beforeSurveys: List<String> = listOf(),
         val afterSurveys: List<String> = listOf(),
-        val location: String = "",
+        val location: String? = null,
         val pictures: List<String> = listOf()
 )
 

@@ -1,16 +1,17 @@
 package se.studieresan.studs.api
 
+import android.util.Log
 import io.reactivex.Observable
 import se.studieresan.studs.models.StudsEvent
 
 class EventSource(val service: BackendService) {
     private var events: List<StudsEvent>? = null
 
-    fun fetchEvents(): Observable<List<StudsEvent>> {
+    fun fetchEvents(): Observable<List<StudsEvent>> =
         if (events != null) {
-            return Observable.just(events)
+            Observable.just(events)
         } else {
-            return Observable.create { observer ->
+            Observable.create { observer ->
                 service.fetchEvents()
                         .subscribe(
                                 {
@@ -18,10 +19,14 @@ class EventSource(val service: BackendService) {
                                     observer.onNext(it.data.allEvents)
                                 },
                                 { throwable ->
+                                    Log.d("EventSource", "$throwable")
                                     observer.onError(throwable)
                                 })
             }
         }
-    }
+
+    fun getEventById(id: String) = fetchEvents()
+            .flatMap { Observable.fromIterable(it) }
+            .filter  { it.id == id }
 
 }

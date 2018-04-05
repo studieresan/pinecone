@@ -1,5 +1,6 @@
 package se.studieresan.studs.events.master
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -14,10 +15,11 @@ import com.spotify.mobius.android.AndroidLogger
 import com.spotify.mobius.android.MobiusAndroid
 import com.spotify.mobius.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_event.*
+import kotlinx.android.synthetic.main.fragment_event.view.*
 import se.studieresan.studs.MainActivity
 import se.studieresan.studs.R
-import se.studieresan.studs.events.master.detail.EventDetailActivity
 import se.studieresan.studs.events.master.detail.EventDetailFragment
+import se.studieresan.studs.events.master.detail.MapsActivity
 import se.studieresan.studs.events.master.loop.Event
 import se.studieresan.studs.events.master.loop.EventsModel
 import se.studieresan.studs.events.master.loop.FetchEvents
@@ -42,6 +44,13 @@ class EventListFragment : Fragment(), EventAdapter.OnEventSelected {
         val view = inflater!!.inflate(R.layout.fragment_event, container, false)
 
         controller.connect(::connectViews)
+
+        view.recyclerview.adapter = adapter
+        view.recyclerview.layoutManager = object: LinearLayoutManager(context) {
+            override fun canScrollVertically() = false
+        }
+
+        controller.start()
         return view
     }
 
@@ -55,39 +64,28 @@ class EventListFragment : Fragment(), EventAdapter.OnEventSelected {
         }
     }
 
+
     private fun render(model: EventsModel) {
         progress.show(model.loading)
-        adapter.events = model.events
+        if (adapter.events != model.events) adapter.events = model.events
     }
 
-    override fun onResume() {
-        super.onResume()
-        recyclerview.adapter = adapter
-        recyclerview.layoutManager = object: LinearLayoutManager(context) {
-            override fun canScrollVertically() = false
-        }
+    override fun onStart() {
+        super.onStart()
         adapter.eventSelectedListener = this
-        controller.start()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        controller.stop()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        controller.stop()
         controller.disconnect()
     }
 
-    companion object {
-        fun newInstance(): EventListFragment = EventListFragment()
-    }
-
     override fun onEventSelected(event: StudsEvent) {
-        val intent = Intent(context, EventDetailActivity::class.java)
+        val intent = Intent(context, MapsActivity::class.java)
         intent.putExtra(EventDetailFragment.EVENT_ID_KEY, event.id)
-        startActivity(intent)
+//        startActivity(intent)
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
     }
 }
 

@@ -9,4 +9,9 @@
     <color name="background">@color/studs_dark</color>
     <color name="light_background">#fcfcfc</color>
 
+    <color name="event_detail_text">@android:color/black</color>
+
+    <color name="studsPrimary">#303B4B</color>
+    <color name="studsSecondary">#F7DDC9</color>
+
 </resources>
