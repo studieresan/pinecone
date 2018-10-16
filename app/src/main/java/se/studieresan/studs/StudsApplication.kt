@@ -1,15 +1,15 @@
 package se.studieresan.studs
 
 import android.app.Application
+import android.preference.PreferenceManager
 import com.google.firebase.FirebaseApp
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import se.studieresan.studs.api.AddCookiesInterceptor
-import se.studieresan.studs.api.BackendService
-import se.studieresan.studs.api.EventSource
-import se.studieresan.studs.api.ReceivedCookiesInterceptor
+import se.studieresan.studs.api.*
+
 
 class StudsApplication: Application() {
 
@@ -19,21 +19,28 @@ class StudsApplication: Application() {
     }
 
     private val retrofit by lazy {
+        val logging = HttpLoggingInterceptor()
+        logging.level = HttpLoggingInterceptor.Level.BODY
         val okHttpClient = OkHttpClient.Builder()
+                .addInterceptor(logging)
                 .addInterceptor(AddCookiesInterceptor(this))
                 .addInterceptor(ReceivedCookiesInterceptor(this))
                 .build()
 
         Retrofit.Builder()
-                .baseUrl("https://studs18-overlord.herokuapp.com/")
+                .baseUrl("https://studs-overlord.appspot.com")
                 .client(okHttpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
     }
 
-    val eventSource by lazy {
-        EventSource(backendService)
+    val eventSource: EventSource by lazy {
+        EventSourceImpl(backendService)
+    }
+
+    val userSource: UserSource by lazy {
+        UserSourceImpl(backendService, PreferenceManager.getDefaultSharedPreferences(this))
     }
 
     val backendService by lazy {

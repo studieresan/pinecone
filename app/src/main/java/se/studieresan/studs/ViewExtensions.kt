@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import java.util.*
 
 fun <T: View> Activity.find(id: Int): T = findViewById(id)
 
@@ -28,3 +29,8 @@ fun EditText.onTextChange(onChange: (String) -> Unit): TextWatcher {
     this.addTextChangedListener(textWatcher)
     return textWatcher
 }
+
+// TODO move
+fun Calendar.isOnSameDayAs(other: Calendar) =
+        get(Calendar.YEAR) == other.get(Calendar.YEAR) &&
+                get(Calendar.DAY_OF_YEAR) == other.get(Calendar.DAY_OF_YEAR)

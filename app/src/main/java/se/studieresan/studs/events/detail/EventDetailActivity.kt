@@ -1,4 +1,4 @@
-package se.studieresan.studs.events.master.detail
+package se.studieresan.studs.events.detail
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

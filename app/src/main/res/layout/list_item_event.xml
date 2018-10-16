@@ -18,7 +18,7 @@
         android:layout_marginBottom="2dp"
         android:focusable="true"
         android:clickable="true"
-        android:background="@android:drawable/list_selector_background"
+        android:foreground="?android:attr/selectableItemBackground"
         android:layout_gravity="center_vertical"
         >
         <LinearLayout

@@ -1,31 +1,32 @@
 package se.studieresan.studs.api
 
-import android.util.Log
 import io.reactivex.Observable
 import se.studieresan.studs.models.StudsEvent
 
-class EventSource(val service: BackendService) {
+interface EventSource {
+
+    fun fetchEvents(): Observable<List<StudsEvent>>
+
+    fun getEventById(id: String): Observable<StudsEvent>
+
+}
+
+class EventSourceImpl(private val service: BackendService): EventSource {
     private var events: List<StudsEvent>? = null
 
-    fun fetchEvents(): Observable<List<StudsEvent>> =
+    override fun fetchEvents(): Observable<List<StudsEvent>> =
         if (events != null) {
             Observable.just(events)
         } else {
-            Observable.create { observer ->
-                service.fetchEvents()
-                        .subscribe(
-                                {
-                                    events = it.data.allEvents
-                                    observer.onNext(it.data.allEvents)
-                                },
-                                { throwable ->
-                                    Log.d("EventSource", "$throwable")
-                                    observer.onError(throwable)
-                                })
-            }
+            service.fetchEvents()
+                    .map {
+                        events = it.data.allEvents
+                        it.data.allEvents
+                    }
+                    .toObservable()
         }
 
-    fun getEventById(id: String) = fetchEvents()
+    override fun getEventById(id: String) = fetchEvents()
             .flatMap { Observable.fromIterable(it) }
             .filter  { it.id == id }
 

@@ -6,36 +6,20 @@
     android:paddingBottom="16dp"
     android:clipToPadding="false"
     android:clipChildren="false"
-    tools:context="se.studieresan.studs.events.master.EventListFragment"
+    tools:context=".events.master.EventListFragment"
     >
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        />
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:descendantFocusability="blocksDescendants"
-            >
-
-            <ProgressBar
-                android:id="@+id/progress"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-
-        </FrameLayout>
-
-    </android.support.v4.widget.NestedScrollView>
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
 
 </FrameLayout>

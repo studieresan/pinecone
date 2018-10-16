@@ -2,6 +2,8 @@ package se.studieresan.studs.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
 import com.spotify.mobius.Connection
 import com.spotify.mobius.Mobius
@@ -19,12 +21,17 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
 
-        val service = (application as StudsApplication).backendService
-        val loopFactory = Mobius.loop(::update, effectHandler(service))
-        controller = MobiusAndroid.controller(loopFactory, INITIAL_STATE)
-        controller?.connect(::connectViews)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        if (preferences.getBoolean(LOGGED_IN, false)) {
+            transitionToMain()
+        } else {
+            setContentView(R.layout.activity_login)
+            val service = (application as StudsApplication).backendService
+            val loopFactory = Mobius.loop(::update, effectHandler(service, preferences))
+            controller = MobiusAndroid.controller(loopFactory, INITIAL_STATE)
+            controller?.connect(::connectViews)
+        }
     }
 
     override fun onStart() {
@@ -62,10 +69,9 @@ class LoginActivity : AppCompatActivity() {
 
         val loginError = model.loginError
         login_error_textview.show(loginError is Error)
-        login_error_textview.text = if (loginError is Error) loginError.message else ""
-
-        if (loginError is Success) {
-            transitionToMain()
+        when (loginError) {
+            is Error -> login_error_textview.text = loginError.message
+            is Success -> transitionToMain()
         }
     }
 
@@ -81,7 +87,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun transitionToMain() {
         val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle())
+        finish()
     }
 
 }

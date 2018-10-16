@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<se.studieresan.studs.ui.DraggableCoordinatorLayout
+<FrameLayout
     android:id="@+id/draggableCoordinatorLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:name="se.studieresan.studs.events.master.EventListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".events.master.detail.MapsActivity">
+    tools:context=".events.detail.MapsActivity">
 
     <FrameLayout
         android:id="@+id/map_holder"
@@ -19,7 +19,7 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context="se.studieresan.studs.events.master.detail.EventDetailActivity"
+            tools:context=".events.detail.EventDetailActivity"
             />
     </FrameLayout>
 
@@ -54,12 +54,12 @@
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 android:background="@android:color/white"
-                tools:context="se.studieresan.studs.events.master.detail.EventDetailActivity"
+                tools:context=".events.detail.EventDetailActivity"
                 />
 
         </LinearLayout>
 
     </se.studieresan.studs.ui.SlideupNestedScrollView>
 
-</se.studieresan.studs.ui.DraggableCoordinatorLayout>
+</FrameLayout>
 

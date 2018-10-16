@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import se.studieresan.studs.R
+import se.studieresan.studs.isOnSameDayAs
 import se.studieresan.studs.models.StudsEvent
+import se.studieresan.studs.show
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
@@ -19,19 +21,25 @@ val FutureEventTitle = 3
 
 class EventAdapter: RecyclerView.Adapter<ViewHolder>() {
 
-    val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH)
     val monthFormatter = SimpleDateFormat("MMM", Locale.ENGLISH)
-    val calendar = GregorianCalendar()
+    val calendar = Calendar.getInstance()
     var events: List<StudsEvent> by Delegates.observable(listOf()) { _, _, _ ->
-        notifyDataSetChanged()
         val today = Date()
-        val (past, future) = events.partition { format.parse(it.date) < today }
-        futureEvents = future
-        previousEvents = past
+        val todaysCalendar = Calendar.getInstance()
+        todaysCalendar.time = today
+        val (past, future) = events.partition {
+            val eventTime = it.eventStart()
+            calendar.time = eventTime
+
+            eventTime < today && !calendar.isOnSameDayAs(todaysCalendar)
+        }
+        futureEvents = future.sortedBy { it.eventStart() }
+        previousEvents = past.sortedBy { it.eventStart() }.reversed()
+        notifyDataSetChanged()
     }
     var previousEvents: List<StudsEvent> = listOf()
     var futureEvents: List<StudsEvent> = listOf()
-    var eventSelectedListener: OnEventSelected? = null
+    var listInteractionListener: OnListInteraction? = null
 
     override fun getItemViewType(position: Int): Int =
         when (position) {
@@ -47,7 +55,11 @@ class EventAdapter: RecyclerView.Adapter<ViewHolder>() {
                     .from(parent!!.context)
                     .inflate(view, parent, false)
         return if (viewType == PreviousEventTitle || viewType == FutureEventTitle) {
-            TitleViewHolder(inflate(R.layout.list_item_event_header))
+            val holder = TitleViewHolder(inflate(R.layout.list_item_event_header))
+            holder.logoutButton.setOnClickListener{
+                listInteractionListener?.onLogout()
+            }
+            holder
         } else {
             EventViewHolder(inflate(R.layout.list_item_event))
         }
@@ -71,19 +83,19 @@ class EventAdapter: RecyclerView.Adapter<ViewHolder>() {
         holder.name.text = event.companyName
         holder.location.text = event.location
 
-        val date = format.parse(event.date)
-        calendar.time = date
+        calendar.time = event.eventStart()
 
         holder.dateNumber.text = calendar.get(Calendar.DAY_OF_MONTH).toString()
         holder.dateMonth.text = monthFormatter.format(calendar.time)
 
         holder.view.setOnClickListener {
-            eventSelectedListener?.onEventSelected(event)
+            listInteractionListener?.onEventSelected(event)
         }
     }
 
     private fun onBindTitle(holder: TitleViewHolder, type: Int) {
         val title = if (type == PreviousEventTitle) "Previous Events" else "Upcoming Events"
+        holder.logoutButton.show(type == FutureEventTitle)
         holder.textView.text = title
     }
 
@@ -105,10 +117,11 @@ class EventAdapter: RecyclerView.Adapter<ViewHolder>() {
 
     class TitleViewHolder(view: View): ViewHolder(view) {
         val textView: TextView = view.findViewById(R.id.header_textview)
+        val logoutButton: TextView = view.findViewById(R.id.logout_button)
     }
 
-    interface OnEventSelected {
+    interface OnListInteraction {
         fun onEventSelected(event: StudsEvent)
+        fun onLogout()
     }
 }
-

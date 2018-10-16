@@ -4,6 +4,7 @@ import android.content.Context
 import android.preference.PreferenceManager
 import okhttp3.Interceptor
 import okhttp3.Response
+import se.studieresan.studs.COOKIES
 
 
 class ReceivedCookiesInterceptor(val context: Context) : Interceptor {

@@ -3,6 +3,7 @@
     package="se.studieresan.studs">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -22,11 +23,7 @@
         <activity
             android:name=".login.LoginActivity"
             android:theme="@style/LoginTheme"
-            android:windowSoftInputMode="stateVisible|adjustPan"></activity>
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:windowSoftInputMode="stateVisible|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,9 +31,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".events.master.detail.EventDetailActivity"
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name="se.studieresan.studs.events.detail.EventDetailActivity"
             android:label="@string/title_activity_event_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -50,7 +51,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".events.master.detail.MapsActivity"
+            android:name="se.studieresan.studs.events.detail.MapsActivity"
             android:label="@string/title_activity_maps"
             android:theme="@style/DetailTheme">
         </activity>

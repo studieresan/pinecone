@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/header_textview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="16dp"
-    android:layout_marginBottom="12dp"
-    android:textColor="@android:color/white"
-    android:text="@string/events_title"
-    style="@style/Base.TextAppearance.AppCompat.Title"
-/>
+    >
+
+    <TextView
+        android:id="@+id/header_textview"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="12dp"
+        android:textColor="@android:color/white"
+        android:text="@string/events_title"
+        style="@style/Base.TextAppearance.AppCompat.Title"
+        />
+
+    <Button
+        android:id="@+id/logout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/margin_small_half"
+        android:alpha="0.8"
+        android:textColor="@android:color/white"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:text="Log Out"/>
+
+
+</LinearLayout>
